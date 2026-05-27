@@ -1,0 +1,184 @@
+/* ============================================
+   CAT PLAYGROUND — Keira's 21st Cat-verse
+   ============================================ */
+
+.playground {
+  background: var(--gradient-bg);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  overflow: hidden;
+}
+
+/* ── Status Bar Section ── */
+.playground__status {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-base);
+}
+
+/* ── 3D Cat Container ── */
+.playground__cat-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  max-height: 400px;
+  min-height: 250px;
+  position: relative;
+  cursor: grab;
+  z-index: var(--z-base);
+}
+
+.playground__cat-container:active {
+  cursor: grabbing;
+}
+
+.playground__cat-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+}
+
+/* Interaction particles overlay */
+.playground__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+}
+
+/* ── Action Buttons ── */
+.playground__actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: var(--z-base);
+}
+
+.playground__actions .btn {
+  min-width: 120px;
+}
+
+.playground__actions .btn.active {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+/* Feed button */
+.btn--feed {
+  background: var(--gradient-warm);
+  color: var(--text-dark);
+}
+
+/* Pet button */
+.btn--pet {
+  background: var(--gradient-primary);
+  color: var(--white);
+}
+
+/* Play button */
+.btn--play {
+  background: var(--gradient-cool);
+  color: var(--text-dark);
+}
+
+/* ── Hint Text ── */
+.playground__hint {
+  text-align: center;
+  z-index: var(--z-base);
+}
+
+/* ── Unlock Button (appears when both bars at 100%) ── */
+.playground__unlock {
+  display: none;
+  z-index: var(--z-base);
+}
+
+.playground__unlock.visible {
+  display: block;
+  animation: fadeInScale 0.6s var(--ease-bounce) forwards;
+}
+
+.playground__unlock .btn {
+  font-size: calc(var(--fs-button) * 1.3);
+  padding: var(--space-lg) var(--space-2xl);
+  background: linear-gradient(135deg, #FFD700, #FF69B4, #C8A2D0);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite, btnGlow 2s ease-in-out infinite;
+  color: var(--white);
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Cat Status Label ── */
+.playground__cat-status {
+  font-family: var(--font-handwrite);
+  font-size: var(--fs-handwrite);
+  color: var(--text-medium);
+  text-align: center;
+  min-height: 1.5em;
+  transition: color var(--duration-normal);
+}
+
+.playground__cat-status.happy {
+  color: var(--mint-dark);
+}
+
+.playground__cat-status.hungry {
+  color: var(--peach-gold-dark);
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .playground {
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .playground__status {
+    padding: var(--space-md);
+    max-width: 100%;
+  }
+
+  .playground__cat-container {
+    min-height: 200px;
+    max-height: 300px;
+  }
+
+  .playground__actions .btn {
+    min-width: 100px;
+    padding: var(--space-sm) var(--space-lg);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .playground__cat-container {
+    max-height: 350px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .playground {
+    padding: var(--space-xl) var(--space-2xl);
+  }
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 21st Birthday Keira Joy 🐾✨</title>
+  <meta name="description" content="Sebuah kado digital interaktif bertema kucing untuk ulang tahun ke-21 Keira Joy. Masuk ke Cat-verse dan rayakan bersama!">
+  <meta name="theme-color" content="#FFD6E0">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/playground.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/finale.css">
+
+  <!-- Three.js -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+<body>
+  <!-- 🔊 Global Audio Toggle -->
+  <button id="audio-toggle" class="audio-toggle no-select" aria-label="Toggle music" title="Toggle Happy Birthday melody">
+    🔇
+  </button>
+  
+  <audio id="bg-music" src="audioultah.mp3" loop preload="auto"></audio>
+
+  <!-- 📱 App Shell -->
+  <div id="app">
+
+    <!-- ════════════════════════════════════════
+         SCREEN 1: LANDING PAGE
+         ════════════════════════════════════════ -->
+    <section id="screen-landing" class="screen landing active">
+      <!-- Reset Button -->
+      <div class="screen-back" style="z-index: 20;">
+        <button id="btn-reset-all" class="btn btn--secondary btn--sm">🔄 Reset Ulang</button>
+      </div>
+      <canvas id="landing-sparkles" class="landing__sparkles"></canvas>
+
+      <div class="landing__content">
+        <div class="landing__paws-top" aria-hidden="true">🐾 🐾 🐾</div>
+
+        <h1 class="landing__title" id="landing-title">Welcome to Keira's</h1>
+        <p class="landing__subtitle" id="landing-subtitle">21st Cat-verse</p>
+
+        <div class="landing__cat" id="landing-cat">
+          <canvas id="landing-cat-canvas" class="landing__cat-canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div class="landing__menu" id="landing-menu">
+          <button id="btn-menu-playground" class="btn btn--primary btn--lg">
+            🐱 Kucing Peliharaan
+          </button>
+          <button id="btn-menu-game" class="btn btn--primary btn--lg">
+            🎮 Game Cat Run
+          </button>
+          <button id="btn-menu-finale" class="btn btn--primary btn--lg btn--locked" disabled>
+            <span id="menu-finale-text">🔒 Ucapan (Terkunci)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="landing__paws-bottom paw-trail" aria-hidden="true">
+        <span class="paw-print">🐾</span>
+        <span class="paw-print">🐾</span>
+        <span class="paw-print">🐾</span>
+        <span class="paw-print">🐾</span>
+        <span class="paw-print">🐾</span>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SCREEN 2: CAT PLAYGROUND
+         ════════════════════════════════════════ -->
+    <section id="screen-playground" class="screen playground">
+      <!-- Back Button -->
+      <div class="screen-back">
+        <button id="btn-play-back" class="btn btn--secondary btn--sm">← Beranda</button>
+      </div>
+      <!-- Status Bars -->
+      <div class="playground__status glass-card" id="playground-status">
+        <div class="status-item">
+          <div class="progress-bar-label">
+            <span>🍖 Hunger</span>
+            <span id="hunger-value">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__fill progress-bar__fill--hunger" id="hunger-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="status-item">
+          <div class="progress-bar-label">
+            <span>💕 Happiness</span>
+            <span id="happiness-value">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__fill progress-bar__fill--happiness" id="happiness-bar" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Cat -->
+      <div class="playground__cat-container" id="cat-container">
+        <canvas id="playground-particles" class="playground__particles"></canvas>
+      </div>
+
+      <!-- Cat Status Text -->
+      <p class="playground__cat-status" id="cat-status-text">Drag kucing untuk memutar 360° 🐱</p>
+
+      <!-- Action Buttons -->
+      <div class="playground__actions" id="playground-actions">
+        <button id="btn-feed" class="btn btn--feed" data-action="feed">
+          <span class="emoji-icon">🍖</span> Feed
+        </button>
+        <button id="btn-pet" class="btn btn--pet" data-action="pet">
+          <span class="emoji-icon">✋</span> Pet
+        </button>
+        <button id="btn-play" class="btn btn--play" data-action="play">
+          <span class="emoji-icon">🎮</span> Play Game
+        </button>
+      </div>
+
+      <!-- Hint -->
+      <p class="playground__hint hint-text">
+        Buat kucingmu bahagia untuk unlock kejutan spesial! 🎉
+      </p>
+
+      <!-- Task Complete Navigation (hidden initially) -->
+      <div class="playground__unlock" id="play-complete-nav" style="display: none; flex-direction: column; gap: 10px; align-items: center;">
+        <p class="hint-text" style="color: var(--primary); font-weight: bold; max-width: 400px; text-align: center;" id="play-complete-text">✨ Tugas Kucing Selesai! ✨</p>
+        <button id="btn-play-next" class="btn btn--primary btn--glow">Lanjutkan ke Task Berikutnya</button>
+        <button id="btn-play-home" class="btn btn--secondary" style="display: none;">← Kembali ke Beranda</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SCREEN 3: MINI GAME
+         ════════════════════════════════════════ -->
+    <section id="screen-game" class="screen game">
+      <!-- Score -->
+      <div class="game__header">
+        <div class="game__score">
+          ⭐ <span id="game-score-value" class="game__score-value">0</span> / <span id="game-target">21</span>
+        </div>
+        <div class="game__score-bar">
+          <div class="game__score-bar-fill" id="game-score-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Canvas -->
+      <div class="game__canvas-wrapper" id="game-canvas-wrapper">
+        <canvas id="game-canvas" class="game__canvas"></canvas>
+
+        <!-- Ready Overlay -->
+        <div class="game__overlay visible" id="game-overlay-ready">
+          <h3>🐱 Cat Jump!</h3>
+          <p>Lompati rintangan dan kumpulkan 21 poin!</p>
+          <button id="btn-game-start" class="btn btn--primary btn--lg">▶ Mulai</button>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div class="game__overlay" id="game-overlay-gameover">
+          <h3>💫 Oops!</h3>
+          <p id="game-over-text">Skor: 0</p>
+          <div>
+            <button id="btn-game-retry" class="btn btn--primary">🔄 Coba Lagi</button>
+            <button id="btn-game-back-go" class="btn btn--secondary">← Kembali</button>
+          </div>
+        </div>
+
+        <!-- Win Overlay -->
+        <div class="game__overlay" id="game-overlay-win">
+          <div class="game__win-text">🎉 SKOR 21! 🎉</div>
+          <p id="game-complete-text" style="max-width: 300px; text-align: center; margin: 10px auto;">Tugas Game Selesai!</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
+            <button id="btn-game-next" class="btn btn--primary btn--glow">Lanjutkan ke Task Berikutnya</button>
+            <button id="btn-game-home-win" class="btn btn--secondary" style="display: none;">← Kembali ke Beranda</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="game__instructions" id="game-instructions">
+        <kbd>Space</kbd> <span>atau</span> <kbd>↑</kbd> <span>untuk melompat</span>
+      </div>
+
+      <!-- Back Button -->
+      <div class="game__back">
+        <button id="btn-game-back" class="btn btn--secondary btn--sm">← Beranda</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SCREEN 4: GRAND FINALE
+         ════════════════════════════════════════ -->
+    <section id="screen-finale" class="screen finale">
+      <!-- Back Button -->
+      <div class="screen-back" style="z-index: 20;">
+        <button id="btn-finale-back" class="btn btn--secondary btn--sm">← Beranda</button>
+      </div>
+      <canvas id="finale-stars" class="finale__stars"></canvas>
+      <canvas id="finale-fireworks" class="finale__fireworks"></canvas>
+      <canvas id="finale-flowers" class="finale__flowers"></canvas>
+      <div class="finale__moon" id="finale-moon"></div>
+
+        <!-- The Envelope & Card -->
+        <div class="finale__envelope-wrapper" id="finale-envelope-wrapper">
+          <div class="finale__envelope" id="finale-envelope">
+            <div class="envelope-flap" id="envelope-flap"></div>
+            <div class="envelope-back"></div>
+            <div class="envelope-front"></div>
+          </div>
+          
+          <div class="finale__hint-text" id="envelope-hint">Klik amplopnya! 💌</div>
+
+          <div class="finale__card glass-card--dark" id="finale-card">
+            <h1 id="finale-title" class="finale__title"></h1>
+            <hr class="finale__divider" id="finale-divider">
+            <div id="finale-message" class="finale__message"></div>
+            <p id="finale-closing" class="finale__closing handwriting"></p>
+            <div class="finale__actions" id="finale-actions">
+              <button id="btn-replay" class="btn btn--primary btn--glow">Main Lagi</button>
+              <button id="btn-finale-home" class="btn btn--secondary">← Beranda</button>
+            </div>
+          </div>
+        </div>
+
+      <p class="finale__click-hint" id="finale-hint">✨ Klik di mana saja untuk kembang api ✨</p>
+    </section>
+
+  </div>
+
+  <!-- ── JavaScript Modules ── -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

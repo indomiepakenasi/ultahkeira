@@ -1,0 +1,294 @@
+/* ============================================
+   GRAND FINALE — Keira's 21st Cat-verse
+   ============================================ */
+
+.finale {
+  background: var(--gradient-dark);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Fireworks Canvas ── */
+.finale__fireworks {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: crosshair;
+}
+
+/* ── Flowers Canvas ── */
+.finale__flowers {
+  position: absolute;
+  inset: 0;
+  z-index: 2; /* Below card, above background */
+  pointer-events: none; /* Let clicks pass through for fireworks */
+}
+
+/* ── Stars Background ── */
+.finale__stars {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── Moon ── */
+.finale__moon {
+  position: absolute;
+  top: 8%;
+  right: 12%;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-round);
+  background: radial-gradient(circle at 35% 35%, #FFF8DC, #FFE4B5);
+  box-shadow: 0 0 40px rgba(255, 228, 181, 0.5), 0 0 80px rgba(255, 228, 181, 0.2);
+  z-index: 1;
+  opacity: 0;
+}
+
+/* ── Birthday Card ── */
+.finale__card {
+  position: relative;
+  z-index: 10;
+  max-width: 480px;
+  width: 90%;
+  padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 0 60px rgba(200, 162, 208, 0.15);
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.finale__card.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Title */
+.finale__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  background: linear-gradient(135deg, #FFD700, #FFA500, #FF69B4);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease infinite;
+  margin-bottom: var(--space-lg);
+  line-height: 1.2;
+}
+
+/* Cat with party hat */
+.finale__cat-icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-lg);
+  display: inline-block;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Message lines */
+.finale__message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.finale__message-line {
+  font-family: var(--font-handwrite);
+  font-size: var(--fs-handwrite);
+  color: var(--text-light);
+  opacity: 0;
+  line-height: var(--lh-normal);
+}
+
+.finale__message-line.visible {
+  opacity: 1;
+}
+
+/* Closing */
+.finale__closing {
+  font-family: var(--font-handwrite);
+  font-size: calc(var(--fs-handwrite) * 1.1);
+  color: var(--soft-pink);
+  opacity: 0;
+  margin-bottom: var(--space-xl);
+}
+
+.finale__closing.visible {
+  opacity: 1;
+}
+
+/* Decorative divider */
+.finale__divider {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0;
+  letter-spacing: 0.3em;
+}
+
+.finale__divider.visible {
+  opacity: 0.6;
+}
+
+/* Replay button */
+.finale__actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+}
+
+.finale__actions.visible {
+  opacity: 1;
+}
+
+.finale__actions .btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-light);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.finale__actions .btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Click hint ── */
+.finale__click-hint {
+  position: absolute;
+  bottom: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-handwrite);
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 5;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .finale__card {
+    padding: var(--space-xl) var(--space-lg);
+    width: 95%;
+  }
+
+  .finale__moon {
+    width: 40px;
+    height: 40px;
+    top: 5%;
+    right: 8%;
+  }
+
+  .finale__cat-icon {
+    font-size: 2.5rem;
+  }
+}
+
+.finale__hint-text {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  color: var(--text-light);
+  margin-top: var(--space-md);
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  animation: float 2s ease-in-out infinite;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ── Envelope System ── */
+.finale__envelope-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: var(--z-modal);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.finale__envelope {
+  position: relative;
+  width: 280px;
+  height: 180px;
+  margin: 0 auto;
+  cursor: pointer;
+  z-index: 10;
+  pointer-events: auto;
+  transition: transform 0.2s;
+}
+
+.finale__envelope:hover {
+  transform: scale(1.05);
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: #D8B4E2;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #E8C4F2;
+  clip-path: polygon(0 0, 50% 55%, 100% 0);
+  transform-origin: top;
+  z-index: 4;
+  border-radius: 8px 8px 0 0;
+  transition: transform 0.6s ease;
+}
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  background: #C8A2D0;
+  clip-path: polygon(0 100%, 0 0, 50% 55%, 100% 0, 100% 100%);
+  border-radius: 0 0 8px 8px;
+  z-index: 3;
+}
+
+/* The Card (hidden inside envelope initially) */
+#finale-card {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 2; /* behind the flap and front */
+  opacity: 0;
+  transform: scale(0.2) translateY(50px);
+  pointer-events: auto;
+}
+
+/* Responsive Envelope */
+@media (max-width: 767px) {
+  .finale__envelope {
+    width: 240px;
+    height: 150px;
+  }
+}
